@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { movieListRequest } from "../Redux/actions";
 
-const MovieList = () => {
+function MovieList({ search, filter }) {
   const dispatch = useDispatch();
+
   const { data: movies, loading, error } = useSelector((state) => state.movies);
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     dispatch(movieListRequest());
@@ -14,30 +14,27 @@ const MovieList = () => {
 
   useEffect(() => {
     if (movies) {
-      setFilteredMovies(movies);
+      let filtered = movies;
+      
+      if (search) {
+        setFilteredMovies(
+          filtered = movies.filter((movie) =>
+            movie.title.toLowerCase().includes(search.toLowerCase())
+          )
+        );
+        // if(filter){
+        //   // todo add genre fitler
+        // }
+      }
+      setFilteredMovies(filtered);
     }
-  }, [movies]);
-
-  const handleFilterChange = (e) => {
-    const value = e.target.value.toLowerCase();
-    setFilter(value);
-    const filtered = movies.filter((movie) =>
-      movie.title.toLowerCase().includes(value)
-    );
-    setFilteredMovies(filtered);
-  };
+  }, [search, filter, movies]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Filter movies..."
-        value={filter}
-        onChange={handleFilterChange}
-      />
       <div>
         <>
           {filteredMovies.length > 0
@@ -45,7 +42,7 @@ const MovieList = () => {
                 <div key={movie.id}>
                   <h2>{movie.title}</h2>
                   <p>{movie.release_date}</p>
-                  <p>{movie.overview.slice(0, 100)}...</p>
+                  <p>{movie.overview}</p>
                 </div>
               ))
             : "no movies to be found"}
@@ -53,6 +50,6 @@ const MovieList = () => {
       </div>
     </div>
   );
-};
+}
 
 export default MovieList;

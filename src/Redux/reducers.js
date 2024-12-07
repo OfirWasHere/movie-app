@@ -2,7 +2,9 @@ import { combineReducers } from 'redux';
 import {
   AUTH_REQUEST, GET_MOVIE_LIST,
   AUTH_SUCCESS, AUTH_FAILURE,
-  MOVIE_LIST_SUCCESS, MOVIE_LIST_FAILURE
+  MOVIE_LIST_SUCCESS, MOVIE_LIST_FAILURE,
+  FETCH_GENRE_SUCCESS, FETCH_GENRE,
+  FETCH_GENRE_FAILURE
 } from "./actionTypes";
 
 const initialAuthState = {
@@ -43,8 +45,28 @@ export const movieReducer = (state = initialMovieState, action) => {
   }
 };
 
+const initialGenreState = {
+  data: [],
+  loading: false,
+  error: null
+}
+
+export const genreReducer = (state = initialGenreState, action) => {
+  switch (action.type) {
+    case FETCH_GENRE:
+      return { ...state, data: null, loading: true }
+    case FETCH_GENRE_SUCCESS:
+      return { ...state, data: action.payload, loading: false }
+    case FETCH_GENRE_FAILURE:
+      return { ...state, loading: false, error: action.payload }
+    default:
+      return state;
+  }
+}
+
 export const rootReducer = combineReducers({
   auth: authReducer,
-  movies: movieReducer
+  movies: movieReducer,
+  genres: genreReducer
 });
 

@@ -1,29 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "strictNullChecks": false,
-    "jsx": "react-jsx",
-    "baseUrl": "./",
-    "paths": {
-      "@components/*": ["src/components/*"],
-      "@redux/*": ["src/redux/*"],
-      "@utils/*": ["src/utils/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@assets/*": ["src/assets/*"]
-    }
+    "module": "CommonJS",
+    "target": "ES6"
   },
-  "include": ["src"]
+  "exclude": ["node_modules", "**/node_modules/*"]
 }
