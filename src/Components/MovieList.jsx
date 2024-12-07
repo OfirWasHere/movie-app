@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { movieListRequest } from '../Redux/actions';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { movieListRequest } from "../Redux/actions";
 
 const MovieList = () => {
   const dispatch = useDispatch();
-  const { data: movies, loading, error } = useSelector(state => state.movies);
+  const { data: movies, loading, error } = useSelector((state) => state.movies);
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     dispatch(movieListRequest());
@@ -21,7 +21,7 @@ const MovieList = () => {
   const handleFilterChange = (e) => {
     const value = e.target.value.toLowerCase();
     setFilter(value);
-    const filtered = movies.filter(movie => 
+    const filtered = movies.filter((movie) =>
       movie.title.toLowerCase().includes(value)
     );
     setFilteredMovies(filtered);
@@ -32,19 +32,18 @@ const MovieList = () => {
 
   return (
     <div>
-      <input 
-        type="text" 
-        placeholder="Filter movies..." 
+      <input
+        type="text"
+        placeholder="Filter movies..."
         value={filter}
         onChange={handleFilterChange}
-        className="mb-4 p-2 border rounded"
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredMovies.map(movie => (
-          <div key={movie.id} className="border p-4 rounded shadow">
-            <h2 className="text-xl font-bold mb-2">{movie.title}</h2>
-            <p className="text-sm text-gray-600 mb-2">{movie.release_date}</p>
-            <p className="text-sm">{movie.overview.slice(0, 100)}...</p>
+      <div>
+        {filteredMovies.map((movie) => (
+          <div key={movie.id}>
+            <h2>{movie.title}</h2>
+            <p>{movie.release_date}</p>
+            <p>{movie.overview.slice(0, 100)}...</p>
           </div>
         ))}
       </div>
@@ -53,4 +52,3 @@ const MovieList = () => {
 };
 
 export default MovieList;
-

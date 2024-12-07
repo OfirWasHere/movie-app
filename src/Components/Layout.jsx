@@ -12,16 +12,16 @@ function Layout() {
   }, [dispatch]);
 
   if (authLoading) {
-    return <div className="container mx-auto px-4 py-8">Loading authentication...</div>;
+    return <div>Loading authentication...</div>;
   }
 
   if (authError) {
-    return <div className="container mx-auto px-4 py-8">Error: {authError}</div>;
+    return <div>Error: {authError}</div>;
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Movie App</h1>
+    <div>
+      <h1>Movie App</h1>
       {auth ? (
         <MovieList />
       ) : (
