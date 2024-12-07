@@ -39,13 +39,17 @@ const MovieList = () => {
         onChange={handleFilterChange}
       />
       <div>
-        {filteredMovies.map((movie) => (
-          <div key={movie.id}>
-            <h2>{movie.title}</h2>
-            <p>{movie.release_date}</p>
-            <p>{movie.overview.slice(0, 100)}...</p>
-          </div>
-        ))}
+        <>
+          {filteredMovies.length > 0
+            ? filteredMovies.map((movie) => (
+                <div key={movie.id}>
+                  <h2>{movie.title}</h2>
+                  <p>{movie.release_date}</p>
+                  <p>{movie.overview.slice(0, 100)}...</p>
+                </div>
+              ))
+            : "no movies to be found"}
+        </>
       </div>
     </div>
   );
