@@ -10,7 +10,7 @@
 
 # production
 /build
-.env
+# .env Dear whoever reviews this app, I committed .env on purpose to easily transfer the api key..
 
 # misc
 .DS_Store

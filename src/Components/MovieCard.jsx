@@ -28,24 +28,25 @@ function MovieCard({
 
   return (
     <Box>
-      <Card sx={{ minWidth: 400, height: 1000 }}>
+      <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
         <CardMedia
-          sx={{ height: 500 }}
+          component="img"
+          sx={{ height: 500, objectFit: "cover" }}
           image={`https://image.tmdb.org/t/p/w500${posterImage}`}
           title={title}
         />
-        <CardContent sx={{ minHeight: 200 }}>
+        <CardContent sx={{ flexGrow: 1 }}>
           <Typography gutterBottom variant="h5" component="div">
             {title}
           </Typography>
           <Typography
-            variant="body1"
+            variant="body2"
             sx={{
+              height: "100px",
               color: "text.secondary",
               overflow: "hidden",
               textOverflow: "ellipsis",
-              WebkitBoxOrient: "vertical",
-              WebkitLineClamp: 5,
+              WebkitLineClamp: 3,
             }}
           >
             {overview}

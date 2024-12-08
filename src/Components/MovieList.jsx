@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { movieListRequest } from "../Redux/actions";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import MovieCard from "./MovieCard";
 
 function MovieList({ search, filter }) {
@@ -34,30 +34,33 @@ function MovieList({ search, filter }) {
     }
   }, [search, filter, movies]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <Box sx={{ p: 2 }}>Loading...</Box>;
+  if (error) return <Box sx={{ p: 2 }}>Error: {error}</Box>;
 
   return (
-    <Box>
-      <Box display={"flex"} overflow={"none"} sx={{ gap: 2, p: 2 }}>
-        <>
-          {filteredMovies.length > 0
-            ? filteredMovies.map((movie) => (
-                <Box width={400} height={"auto"} key={movie.id}>
-                  <MovieCard
-                    title={movie.title}
-                    release_date={movie.release_date}
-                    overview={movie.overview}
-                    posterImage={movie.poster_path}
-                    vote_average={movie.vote_average}
-                  ></MovieCard>
-                </Box>
-              ))
-            : "No movies to be found, please try again"}
-        </>
-      </Box>
+    <Box sx={{ p: 2 }}>
+      <Grid container spacing={2}>
+        {filteredMovies.length > 0 ? (
+          filteredMovies.map((movie) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
+              <MovieCard
+                title={movie.title}
+                release_date={movie.release_date}
+                overview={movie.overview}
+                posterImage={movie.poster_path}
+                vote_average={movie.vote_average}
+              />
+            </Grid>
+          ))
+        ) : (
+          <Grid item xs={12}>
+            <Typography>No movies found, please try again</Typography>
+          </Grid>
+        )}
+      </Grid>
     </Box>
   );
 }
 
 export default MovieList;
+
