@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { movieListRequest } from "../Redux/actions";
 import { Box, Typography } from "@mui/material";
+import MovieCard from "./MovieCard";
 
 function MovieList({ search, filter }) {
   const dispatch = useDispatch();
@@ -38,16 +39,18 @@ function MovieList({ search, filter }) {
 
   return (
     <Box>
-      <Box>
+      <Box display={"flex"} overflow={"none"} sx={{ gap: 2, p: 2 }}>
         <>
           {filteredMovies.length > 0
             ? filteredMovies.map((movie) => (
-                <Box key={movie.id}>
-                  <Typography>{movie.title}</Typography>
-                  <Typography>{movie.release_date}</Typography>
-                  <Typography>{movie.overview}</Typography>
-                  <Typography>{movie.poster_path}</Typography>
-                  <Typography>{movie.vote_average} out of 10</Typography>
+                <Box width={400} height={"auto"} key={movie.id}>
+                  <MovieCard
+                    title={movie.title}
+                    release_date={movie.release_date}
+                    overview={movie.overview}
+                    posterImage={movie.poster_path}
+                    vote_average={movie.vote_average}
+                  ></MovieCard>
                 </Box>
               ))
             : "No movies to be found, please try again"}
