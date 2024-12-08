@@ -1,0 +1,9 @@
+.MuiButtonBase-root.MuiButton-root .MuiTouchRipple-root {
+    display: none !important;
+}
+
+.MuiButtonBase-root.MuiButton-root:focus {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}

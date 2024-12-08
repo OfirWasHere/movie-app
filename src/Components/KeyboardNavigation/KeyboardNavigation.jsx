@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import "./KeyboardNavigation.css";
 
 const KeyboardNavigation = ({ children }) => {
   const [focusedIndex, setFocusedIndex] = useState(-1);
@@ -23,14 +24,6 @@ const KeyboardNavigation = ({ children }) => {
           e.preventDefault();
           setFocusedIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
           break;
-        // case "ArrowDown":
-        //   e.preventDefault();
-        //   setFocusedIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
-        //   break;
-        // case "ArrowUp":
-        //   e.preventDefault();
-        //   setFocusedIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
-        //   break;
         case "Enter":
           focusableElements[focusedIndex]?.click();
           break;

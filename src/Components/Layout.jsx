@@ -4,7 +4,7 @@ import { authRequest } from "../Redux/actions";
 import MovieList from "./MovieList";
 import { Box } from "@mui/material";
 import Filters from "./Filters";
-import KeyboardNavigation from "./KeyboardNavigation";
+import KeyboardNavigation from "./KeyboardNavigation/KeyboardNavigation";
 
 function Layout() {
   const dispatch = useDispatch();
