@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from "redux-saga/effects"
-import { FETCH_GENRE, FETCH_GENRE_SUCCESS, FETCH_GENRE_FAILURE } from "../Redux/actionTypes";
+import { FETCH_GENRE_LIST, FETCH_GENRE_SUCCESS, FETCH_GENRE_FAILURE } from "../Redux/actionTypes";
 
-function* getMovieGenreList() {
+function* getGenreList() {
     try {
         const response = yield call(fetch, 'https://api.themoviedb.org/3/genre/movie/list', {
             method: 'GET',
@@ -13,7 +13,9 @@ function* getMovieGenreList() {
 
         const data = yield response.json()
 
-        yield put({ type: FETCH_GENRE_SUCCESS, payload: data.data });
+        
+        yield put({ type: FETCH_GENRE_SUCCESS, payload: data.genres });
+        
 
     } catch (error) {
         console.log(error)
@@ -22,5 +24,5 @@ function* getMovieGenreList() {
 }
 
 export function* watchGetGenreList() {
-    yield takeLatest(FETCH_GENRE, getMovieGenreList)
+    yield takeLatest(FETCH_GENRE_LIST, getGenreList)
 }

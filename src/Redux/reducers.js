@@ -3,7 +3,7 @@ import {
   AUTH_REQUEST, GET_MOVIE_LIST,
   AUTH_SUCCESS, AUTH_FAILURE,
   MOVIE_LIST_SUCCESS, MOVIE_LIST_FAILURE,
-  FETCH_GENRE_SUCCESS, FETCH_GENRE,
+  FETCH_GENRE_SUCCESS, FETCH_GENRE_LIST,
   FETCH_GENRE_FAILURE
 } from "./actionTypes";
 
@@ -37,7 +37,7 @@ export const movieReducer = (state = initialMovieState, action) => {
     case GET_MOVIE_LIST:
       return { ...state, loading: true };
     case MOVIE_LIST_SUCCESS:
-      return { ...state, data: action.payload, loading: false, error: null };
+      return { ...state, data: action.payload, loading: false};
     case MOVIE_LIST_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:
@@ -53,10 +53,10 @@ const initialGenreState = {
 
 export const genreReducer = (state = initialGenreState, action) => {
   switch (action.type) {
-    case FETCH_GENRE:
-      return { ...state, data: null, loading: true }
+    case FETCH_GENRE_LIST:
+      return { ...state, loading: true }
     case FETCH_GENRE_SUCCESS:
-      return { ...state, data: action.payload, loading: false }
+      return { ...state, data: action.payload, loading: false };
     case FETCH_GENRE_FAILURE:
       return { ...state, loading: false, error: action.payload }
     default:

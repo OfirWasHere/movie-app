@@ -6,14 +6,19 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { genreListRequest } from "../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 function Filters({ search, filter, onSearch, onFilterSelect }) {
   const dispatch = useDispatch();
+
   const { data: genres, loading, error } = useSelector((state) => state.genres);
+
+  useEffect(() => {
+    dispatch(genreListRequest());
+  }, [dispatch]);
 
   const handleFilterChange = (event) => {
     onFilterSelect(event.target.value);
@@ -21,13 +26,7 @@ function Filters({ search, filter, onSearch, onFilterSelect }) {
 
   const handleSearchChange = (event) => {
     onSearch(event.target.value);
-    console.log(genres);
-    
   };
-
-  useEffect(() => {
-    dispatch(genreListRequest());
-  }, [dispatch]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -62,6 +61,15 @@ function Filters({ search, filter, onSearch, onFilterSelect }) {
               onChange={handleFilterChange}
               fullWidth
             >
+              {genres && genres.length > 0 ? (
+                genres.map((genre) => (
+                  <MenuItem key={genre.id} value={genre.id}>
+                    {genre.name}
+                  </MenuItem>
+                ))
+              ) : (
+                <MenuItem disabled>No genres available</MenuItem>
+              )}
             </Select>
           </FormControl>
         </Box>
