@@ -6,6 +6,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
+import Modal from "./Modal";
+import { useState } from "react";
 
 function MovieCard({
   title,
@@ -14,6 +16,16 @@ function MovieCard({
   posterImage,
   vote_average,
 }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
   return (
     <Box>
       <Card sx={{ minWidth: 400, height: 1000 }}>
@@ -23,20 +35,48 @@ function MovieCard({
           title={title}
         />
         <CardContent sx={{ minHeight: 200 }}>
-          <Typography gutterBottom variant="h4" component="div">
+          <Typography gutterBottom variant="h5" component="div">
             {title}
           </Typography>
-          <Typography variant="body1" sx={{ color: "text.secondary" }}>
+          <Typography
+            variant="body1"
+            sx={{
+              color: "text.secondary",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 5,
+            }}
+          >
             {overview}
           </Typography>
-          <Typography variant="body1" sx={{ color: "text.secondary" }}>
-            {release_date}, 🌟 Rating: 10/{vote_average}
+          <Typography
+            variant="body2"
+            sx={{ color: "text.secondary", marginTop: 1 }}
+          >
+            {release_date} | 🌟 {vote_average}/10
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Details</Button>
+          <Button
+            size="large"
+            variant="outlined"
+            fullWidth
+            onClick={handleOpen}
+          >
+            Details
+          </Button>
         </CardActions>
       </Card>
+      <Modal
+        isOpen={isOpen}
+        handleClose={handleClose}
+        title={title}
+        release_date={release_date}
+        overview={overview}
+        posterImage={posterImage}
+        vote_average={vote_average}
+      />
     </Box>
   );
 }
