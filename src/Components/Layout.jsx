@@ -25,6 +25,10 @@ function Layout() {
     setFilter(filter);
   };
 
+  const handleNavButtonClick = (value) => {
+    console.log(value);
+  };
+
   return (
     <KeyboardNavigation>
       <Box
@@ -41,6 +45,7 @@ function Layout() {
           <Filters
             search={search}
             filter={filter}
+            handleNavButtonClick={handleNavButtonClick}
             onSearch={handleOnSearch}
             onFilterSelect={handleOnFilterSelect}
           />

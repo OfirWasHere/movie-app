@@ -1,19 +1,27 @@
+import React, { useEffect } from "react";
 import {
+  AppBar,
+  Toolbar,
   Box,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
   TextField,
+  Button,
+  Typography,
 } from "@mui/material";
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { genreListRequest } from "../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { genreListRequest } from "../Redux/actions";
 
-function Filters({ search, filter, onSearch, onFilterSelect }) {
+const Filters = ({
+  search,
+  filter,
+  onSearch,
+  onFilterSelect,
+  handleNavButtonClick,
+}) => {
   const dispatch = useDispatch();
-
   const { data: genres, loading, error } = useSelector((state) => state.genres);
 
   useEffect(() => {
@@ -21,6 +29,7 @@ function Filters({ search, filter, onSearch, onFilterSelect }) {
   }, [dispatch]);
 
   const handleFilterChange = (event) => {
+    event.preventDefault();
     onFilterSelect(event.target.value);
   };
 
@@ -28,54 +37,85 @@ function Filters({ search, filter, onSearch, onFilterSelect }) {
     onSearch(event.target.value);
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
   return (
-    <div>
-      <FormControl fullWidth>
-        <Box
-          pt={2}
-          display="flex"
-          flexDirection="row"
-          justifyContent="center"
-          alignItems="center"
-          spacing={2}
-          gap={2}
-          m={2}
-        >
-          <TextField
-            label="Search..."
-            variant="filled"
-            value={search}
-            onChange={handleSearchChange}
-            fullWidth
-            sx={{ maxWidth: 400 }}
-          />
+    <AppBar position="static" sx={{ backgroundColor: "#1a237e" }}>
+      <Toolbar
+        sx={{ justifyContent: "space-between", flexWrap: "wrap", gap: 2 }}
+      >
+        <Typography variant="h6" sx={{ flexShrink: 0, color: "#fff" }}>
+          Movie Explorer
+        </Typography>
 
-          <FormControl variant="filled" sx={{ minWidth: 160 }}>
-            <InputLabel>Filter by</InputLabel>
-            <Select
-              label="Filter"
-              value={filter}
-              onChange={handleFilterChange}
-              fullWidth
-            >
-              {genres && genres.length > 0 ? (
-                genres.map((genre) => (
-                  <MenuItem key={genre.id} value={genre.id}>
-                    {genre.name}
-                  </MenuItem>
-                ))
-              ) : (
-                <MenuItem disabled>No genres available</MenuItem>
-              )}
-            </Select>
-          </FormControl>
+        <Box display="flex" gap={1} flexWrap="wrap">
+          <Button
+            onClick={() => handleNavButtonClick("Popular")}
+            variant="contained"
+            color="secondary"
+          >
+            Popular Movies
+          </Button>
+          <Button
+            onClick={() => handleNavButtonClick("Airing")}
+            variant="contained"
+            color="secondary"
+          >
+            Airing Now
+          </Button>
+          <Button
+            onClick={() => handleNavButtonClick("Favorites")}
+            variant="contained"
+            color="secondary"
+          >
+            My Favorites
+          </Button>
         </Box>
-      </FormControl>
-    </div>
+
+        <TextField
+          label="Search Movies"
+          variant="outlined"
+          value={search}
+          onChange={handleSearchChange}
+          size="small"
+          sx={{
+            backgroundColor: "#fff",
+            borderRadius: 1,
+            minWidth: 300,
+          }}
+        />
+
+        <FormControl
+          variant="outlined"
+          size="small"
+          sx={{
+            backgroundColor: "#fff",
+            borderRadius: 1,
+            minWidth: 200,
+          }}
+        >
+          <InputLabel>Filter by Genre</InputLabel>
+          <Select
+            value={filter}
+            onChange={handleFilterChange}
+            label="Filter by Genre"
+          >
+            {loading ? (
+              <MenuItem disabled>Loading...</MenuItem>
+            ) : error ? (
+              <MenuItem disabled>Error: {error}</MenuItem>
+            ) : genres?.length > 0 ? (
+              genres.map((genre) => (
+                <MenuItem key={genre.id} value={genre.id}>
+                  {genre.name}
+                </MenuItem>
+              ))
+            ) : (
+              <MenuItem disabled>No genres available</MenuItem>
+            )}
+          </Select>
+        </FormControl>
+      </Toolbar>
+    </AppBar>
   );
-}
+};
 
 export default Filters;

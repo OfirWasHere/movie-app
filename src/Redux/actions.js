@@ -1,4 +1,4 @@
-import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, GET_MOVIE_LIST, FETCH_GENRE_LIST } from "./actionTypes";
+import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, GET_MOVIE_LIST, FETCH_GENRE_LIST, FETCH_AIR_NOW_LIST } from "./actionTypes";
 
 export const authRequest = () => ({
   type: AUTH_REQUEST,
@@ -20,4 +20,8 @@ export const movieListRequest = () => ({
 
 export const genreListRequest = () => ({
   type: FETCH_GENRE_LIST,
+})
+
+export const airNowRequest = () => ({
+  type: FETCH_AIR_NOW_LIST,
 })

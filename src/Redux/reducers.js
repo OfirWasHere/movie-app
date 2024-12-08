@@ -37,7 +37,7 @@ export const movieReducer = (state = initialMovieState, action) => {
     case GET_MOVIE_LIST:
       return { ...state, loading: true };
     case MOVIE_LIST_SUCCESS:
-      return { ...state, data: action.payload, loading: false};
+      return { ...state, data: action.payload, loading: false };
     case MOVIE_LIST_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:
@@ -64,9 +64,29 @@ export const genreReducer = (state = initialGenreState, action) => {
   }
 }
 
+
+const initialAirNowState = {
+  data: [],
+  loading: false,
+  error: null
+}
+
+export const airNowReducer = (state = initialAirNowState, action) => {
+  switch (action.type) {
+    case FETCH_GENRE_LIST:
+      return { ...state, loading: true }
+    case FETCH_GENRE_SUCCESS:
+      return { ...state, data: action.payload, loading: false };
+    case FETCH_GENRE_FAILURE:
+      return { ...state, loading: false, error: action.payload }
+    default:
+      return state;
+  }
+}
 export const rootReducer = combineReducers({
   auth: authReducer,
   movies: movieReducer,
-  genres: genreReducer
+  genres: genreReducer,
+  airNow: airNowReducer,
 });
 
